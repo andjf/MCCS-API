@@ -1,5 +1,6 @@
-from google.cloud import bigquery
 import logging
+
+from google.cloud import bigquery
 
 
 class BigQueryClient:
