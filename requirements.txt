@@ -1,0 +1,5 @@
+python-dotenv
+google-cloud-bigquery
+google-generativeai
+isort
+black
