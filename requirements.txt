@@ -3,3 +3,5 @@ google-cloud-bigquery
 google-generativeai
 isort
 black
+fastapi
+uvicorn
