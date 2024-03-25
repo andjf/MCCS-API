@@ -10,7 +10,7 @@ The database schema is as follows:
   - Columns:
     - COMMAND_CD STRING (The command code where the adjustment took place)
     - SITE_ID INTEGER (The site ID where the adjustment took place (foreign key referencing "SITEID" column of the "locations" table))
-    - ADJUSTMENT_CATEGORY STRING (The category of the adjustment)
+    - ADJUSTMENT_CATEGORY STRING (The category of the adjustment. Options are ["Shrink", "Surveys", "All Other", "Reconciliation"])
     - DESCRIPTION STRING (The description of the adjustment)
     - DIVISION STRING (The division of the adjustment)
     - LOB_DESC STRING (The line of business description)
