@@ -5,16 +5,16 @@ from typing import Callable
 import vertexai
 from vertexai.language_models import TextGenerationModel
 
-from transform import remove_markdown_code_formatting, single_line
+from transform import remove_markdown_code_formatting, format_sql
 
 TRANSFORMERS: list[Callable[[str], str]] = [
     remove_markdown_code_formatting,
-    single_line,
+    format_sql,
 ]
 
 PARAMS = {
     "max_output_tokens": 2048,
-    "temperature": 0.9,
+    "temperature": 0.25,
     "top_p": 1,
 }
 

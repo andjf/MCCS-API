@@ -1,3 +1,6 @@
+import sqlparse
+
+
 def remove_markdown_code_formatting(markdown: str) -> str:
     """
     Given:
@@ -11,14 +14,11 @@ def remove_markdown_code_formatting(markdown: str) -> str:
     return markdown.replace("```sql", "").replace("```", "").strip()
 
 
-def single_line(query: str) -> str:
-    """
-    Given:
-    SELECT *
-    FROM table
-    WHERE condition
-
-    Returns:
-    SELECT * FROM table WHERE condition
-    """
-    return " ".join(map(str.strip, query.split("\n"))).strip()
+def format_sql(query: str) -> str:
+    """Given a SQL query, return a formatted version of the query."""
+    return sqlparse.format(
+        query,
+        reindent=True,
+        keyword_case="upper",
+        strip_comments=True,
+    )

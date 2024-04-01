@@ -5,3 +5,5 @@ isort
 black
 fastapi
 uvicorn
+sqlparse
+google-cloud-aiplatform

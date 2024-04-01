@@ -4,6 +4,8 @@ from typing import Annotated
 
 from dotenv import dotenv_values
 from fastapi import APIRouter, Body, Depends, FastAPI
+from fastapi.responses import FileResponse
+import uvicorn
 
 from big_query_client import BigQueryClient
 from gen_ai import GenAI
@@ -25,10 +27,15 @@ def big_query_client() -> BigQueryClient:
 app = FastAPI()
 
 
-@app.get("/ping")
-def ping():
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse("static/favicon.ico")
+
+
+@app.get("/")
+def home():
     return {
-        "message": "pong",
+        "status": "up",
         "timestamp": datetime.now(),
     }
 
@@ -51,3 +58,6 @@ def query(
 
 
 app.include_router(router)
+
+if __name__ == "__main__":
+    uvicorn.run("server:app", host="localhost", port=8000, reload=True)
