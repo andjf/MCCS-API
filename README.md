@@ -11,3 +11,9 @@ After dependencies are installed, you should be able to run the project using
 ```
 python -m uvicorn server:app --host localhost --port 8080 --reload
 ```
+
+## Auth with Google Cloud
+Once `gcloud` has been initialized, the following should be run:
+```
+gcloud auth application-default login
+```
