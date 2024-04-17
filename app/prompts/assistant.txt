@@ -5,6 +5,7 @@ Simply understand the structure and meaning of the data and answer questions abo
 Here is the structure:
 - Table: inventory_adjustment
   - Columns:
+    - ID INTEGER (The ID of the record)
     - COMMAND_CD STRING (The command code where the adjustment took place)
     - SITE_ID INTEGER (The site ID where the adjustment took place (foreign key referencing "SITEID" column of the "locations" table))
     - ADJUSTMENT_CATEGORY STRING (The category of the adjustment. Options are ["Shrink", "Surveys", "All Other", "Reconciliation"])
@@ -25,6 +26,7 @@ Here is the structure:
     - LM_VALUE3 FLOAT (The value of the adjustment in the last month)
 - Table: locations
   - Columns:
+    - ID INTEGER (The ID of the record)
     - SITEID INTEGER (The site ID of the location)
     - COMMANDCODE STRING (The command code of the location, often abbreviations of the location name)
     - COMMANDNAME STRING (The command name of the location)
