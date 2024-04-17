@@ -1,28 +1,14 @@
 import logging
 from datetime import datetime
-from typing import Annotated
 
-from dotenv import dotenv_values
-from fastapi import APIRouter, Body, Depends, FastAPI
-from fastapi.responses import FileResponse
 import uvicorn
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
 
-from big_query_client import BigQueryClient
-from gen_ai import GenAI
+from llm.controller import router as llm_router
+from query.controller import router as query_router
 
 logging.basicConfig(level=logging.INFO)
-
-# Load environment variables into a dictionary
-env = dotenv_values(".env")
-
-
-def gen_ai_model() -> GenAI:
-    return GenAI(project=env["BIG_QUERY_PROJECT"])
-
-
-def big_query_client() -> BigQueryClient:
-    return BigQueryClient(project=env["BIG_QUERY_PROJECT"])
-
 
 app = FastAPI()
 
@@ -40,24 +26,8 @@ def home():
     }
 
 
-router = APIRouter(prefix="/query", tags=["Query"])
-
-
-@router.post("/")
-def query(
-    action: Annotated[str, Body()],
-    gen_ai: GenAI = Depends(gen_ai_model),
-    big_query: BigQueryClient = Depends(big_query_client),
-):
-    model_generated_query = gen_ai.generate_query(
-        PROJECT=env["BIG_QUERY_PROJECT"],
-        DATASET=env["BIG_QUERY_DATASET"],
-        ACTION=action,
-    )
-    return big_query.query(model_generated_query)
-
-
-app.include_router(router)
+app.include_router(query_router)
+app.include_router(llm_router)
 
 if __name__ == "__main__":
     uvicorn.run("server:app", host="localhost", port=8000, reload=True)

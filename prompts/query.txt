@@ -36,4 +36,5 @@ The database schema is as follows:
     - COMMANDNAME STRING (The command name of the location)
     - STORENAME STRING (The store name of the location)
 
-Please write a SQL query to perform the following action (enclosed in triple brackets): [[[{ACTION}]]].
+Please write a SQL query to perform the following action which is enclosed in triple brackets:
+[[[{query}]]]
