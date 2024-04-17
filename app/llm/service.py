@@ -3,7 +3,7 @@ from typing import Callable
 
 from app.clients.gen_ai_client import GenAIClient
 from app.env import env
-from app.llm.transform import format_sql, remove_markdown_code_formatting
+from app.transform import format_sql, remove_markdown_code_formatting
 
 TRANSFORMERS: list[Callable[[str], str]] = [
     remove_markdown_code_formatting,
