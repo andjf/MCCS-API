@@ -10,7 +10,7 @@ TRANSFORMERS: list[Callable[[str], str]] = [
     format_sql,
 ]
 
-PROMPT_PATH = "app/prompts"
+PROMPT_PATH = env["PROMPT_PATH"]
 
 
 def execute_generate(prompt: str, gen_ai_client: GenAIClient):
