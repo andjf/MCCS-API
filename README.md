@@ -21,3 +21,7 @@ Once `gcloud` has been initialized, the following should be run:
 gcloud auth application-default login
 ```
 
+Upload image to Google Cloud Build
+```
+gcloud builds submit --tag us-east4-docker.pkg.dev/marine-shrink/mccs/mccsapi
+```
