@@ -3,8 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Body, Depends, Response
 
 from app.clients.gen_ai_client import GenAIClient, get_gen_ai_client
-
-from .service import execute_assistant_generate, execute_query_generate
+from app.llm.service import execute_assistant_generate, execute_query_generate
 
 router = APIRouter(prefix="/generate", tags=["LLM"])
 
@@ -37,7 +36,4 @@ def generate(
     ],
     gen_ai_client: GenAIClient = Depends(get_gen_ai_client),
 ):
-    return Response(
-        execute_query_generate(plaintext_query, gen_ai_client),
-        media_type="text/plain",
-    )
+    return execute_query_generate(plaintext_query, gen_ai_client)

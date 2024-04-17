@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 
 from app.llm.controller import router as llm_router
-from app.query.controller import router as query_router
+from app.query.controller import data_router, query_router
 
 logging.basicConfig(level=logging.INFO)
 
@@ -27,6 +27,7 @@ def home():
 
 
 app.include_router(query_router)
+app.include_router(data_router)
 app.include_router(llm_router)
 
 if __name__ == "__main__":
