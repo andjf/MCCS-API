@@ -2,11 +2,10 @@ from typing import Annotated
 
 from fastapi import APIRouter, Body, Depends
 
+import app.query.service as query_service
 from app.clients.big_query_client import BigQueryClient, get_big_query_client
 from app.clients.gen_ai_client import GenAIClient, get_gen_ai_client
 from app.llm.service import execute_query_generate
-
-import app.query.service as query_service
 
 router = APIRouter(prefix="/query", tags=["Query"])
 
