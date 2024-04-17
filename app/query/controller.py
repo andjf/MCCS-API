@@ -12,10 +12,10 @@ router = APIRouter(prefix="/query", tags=["Query"])
 
 @router.post("/")
 def query(
-    sql_query: str,
+    query: Annotated[str, Body()],
     bq_client: BigQueryClient = Depends(get_big_query_client),
 ):
-    return query_service.execute_query(sql_query, bq_client)
+    return query_service.execute_query(query, bq_client)
 
 
 @router.post("/english")
