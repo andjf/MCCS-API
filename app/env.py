@@ -1,11 +1,6 @@
-from dotenv import dotenv_values
-
-try:
-    with open(".env") as f:
-        pass
-except FileNotFoundError:
-    raise FileNotFoundError(
-        "The .env file is missing. Please create one in the project root directory."
-    )
-
-env = dotenv_values(".env")
+# None of this information is sensitive, so it's okay to store it in the repository.
+env = {
+    "BIG_QUERY_PROJECT": "marine-shrink",
+    "BIG_QUERY_DATASET": "shrink",
+    "PROMPT_PATH": "app/prompts",
+}
