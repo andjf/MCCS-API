@@ -1,18 +1,18 @@
 from typing import Callable
-from clients.gen_ai_client import GenAIClient
+from app.clients.gen_ai_client import GenAIClient
 
 
-from llm.transform import format_sql, remove_markdown_code_formatting
+from app.llm.transform import format_sql, remove_markdown_code_formatting
 from functools import reduce
 
-from env import env
+from app.env import env
 
 TRANSFORMERS: list[Callable[[str], str]] = [
     remove_markdown_code_formatting,
     format_sql,
 ]
 
-PROMPT_PATH = "prompts"
+PROMPT_PATH = "app/prompts"
 
 
 def execute_generate(prompt: str, gen_ai_client: GenAIClient):

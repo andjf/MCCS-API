@@ -1,4 +1,4 @@
-from clients.big_query_client import BigQueryClient
+from app.clients.big_query_client import BigQueryClient
 
 
 def execute_query(sql_query: str, bq_client: BigQueryClient):

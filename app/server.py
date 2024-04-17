@@ -5,8 +5,8 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 
-from llm.controller import router as llm_router
-from query.controller import router as query_router
+from app.llm.controller import router as llm_router
+from app.query.controller import router as query_router
 
 logging.basicConfig(level=logging.INFO)
 
@@ -30,4 +30,4 @@ app.include_router(query_router)
 app.include_router(llm_router)
 
 if __name__ == "__main__":
-    uvicorn.run("server:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("app/server:app", host="localhost", port=8000, reload=True)

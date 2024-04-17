@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Body, Depends
 
-from clients.gen_ai_client import GenAIClient, get_gen_ai_client
+from app.clients.gen_ai_client import GenAIClient, get_gen_ai_client
 
 from .service import execute_query_generate, execute_assistant_generate
 

@@ -2,7 +2,7 @@ import logging
 
 from google.cloud import bigquery
 
-from env import env
+from app.env import env
 
 
 class BigQueryClient:

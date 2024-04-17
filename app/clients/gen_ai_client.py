@@ -3,7 +3,7 @@ import logging
 import vertexai
 from vertexai.language_models import TextGenerationModel
 
-from env import env
+from app.env import env
 
 PARAMS = {
     "max_output_tokens": 2048,
