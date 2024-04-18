@@ -37,6 +37,7 @@ async def favicon():
 def home():
     return {
         "status": "up",
+        "path": "/",
         "timestamp": datetime.now(),
     }
 
