@@ -19,7 +19,7 @@ def page_query(page: int, page_size: int):
 def select_from(table_name: str):
     return f"""
     SELECT *
-    FROM `{env['BIG_QUERY_PROJECT']}.{env['BIG_QUERY_DATASET']}.{table_name}`
+    FROM `{env['BIG_QUERY_DATASET']}.{table_name}`
     """
 
 
@@ -73,11 +73,13 @@ def get_all_data(
     )
 
     query = format_sql(
-        f"""
-        {select_from('inventory_adjustment')}
-        WHERE {filters}
-        {page_query(page, page_size)}
-        """,
+        " ".join(
+            [
+                select_from("inventory_adjustment"),
+                f"WHERE {filters}" if filters else "",
+                page_query(page, page_size),
+            ]
+        ),
     )
 
     return execute_query(query, bq_client)
