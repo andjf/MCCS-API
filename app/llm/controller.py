@@ -19,7 +19,7 @@ def generate(
     ],
     gen_ai_client: GenAIClient = Depends(get_gen_ai_client),
 ):
-    return execute_assistant_generate(question, gen_ai_client),
+    return execute_assistant_generate(question, gen_ai_client)
 
 
 @router.post("/query")
