@@ -19,10 +19,7 @@ def generate(
     ],
     gen_ai_client: GenAIClient = Depends(get_gen_ai_client),
 ):
-    return Response(
-        execute_assistant_generate(question, gen_ai_client),
-        media_type="text/plain",
-    )
+    return execute_assistant_generate(question, gen_ai_client),
 
 
 @router.post("/query")
