@@ -1,4 +1,5 @@
 from typing import List
+
 from app.clients.big_query_client import BigQueryClient
 from app.env import env
 from app.transform import format_sql
