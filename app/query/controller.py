@@ -8,6 +8,8 @@ from app.clients.big_query_client import BigQueryClient, get_big_query_client
 from app.clients.gen_ai_client import GenAIClient, get_gen_ai_client
 from app.llm.service import execute_query_generate
 
+from functools import reduce
+
 query_router = APIRouter(prefix="/query", tags=["Query"])
 data_router = APIRouter(prefix="/query/data", tags=["Data Query"])
 
@@ -39,10 +41,18 @@ def query(
     bq_client: BigQueryClient = Depends(get_big_query_client),
 ):
     try:
-        return query_service.execute_query(
+        result = query_service.execute_query(
             execute_query_generate(action, gen_ai),
             bq_client,
         )
+        if type(result) == list and all(type(data) == dict for data in result):
+            dictionary_keys = [list(data.keys()) for data in result]
+            if all(len(keys) == 1 for keys in dictionary_keys):
+                single_key: str | None = reduce(lambda x, y: x if x == y else None, [keys[0] for keys in dictionary_keys])
+                if single_key:
+                    formatted_single_key = single_key.replace("_", " ").title()
+                    return f"{formatted_single_key} Values: {', '.join([data[single_key] for data in result])}"
+        return result
     except BadRequest as e:
         return Response(
             content=f"Error: {e.message}. Try rephrasing or simplifying your query.",
