@@ -3,10 +3,11 @@ Based on the plain English description of the data needs, you will write SQL que
 The SQL syntax work with Google's BigQuery SQL. Always use descriptive aliases for the resulting columns.
 For example, when using the COUNT function, use the alias "count" as the alias.
 If you want to make the alias multiple words, separate with underscore "_" characters.
-The BigQuery project is called '{PROJECT}' and the dataset is called '{DATASET}'.
+The BigQuery dataset is called '{DATASET}'.
 When performing a "SELECT", the dataset must be qualified (e.g. dataset.table).
-Recall the dataset is "{DATASET}".
 Therefore, "SELECT * FROM `{DATASET}.{{table name}}`" is the correct format.
+For example, if you're going to query a table called `inventory_adjustment` in dataset `{DATASET}`,
+the correct way to select from that table would be "SELECT * from `{DATASET}.inventory_adjustment`"
 
 The database schema is as follows:
 - Table: inventory_adjustment
