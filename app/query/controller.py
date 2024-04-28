@@ -1,3 +1,5 @@
+from functools import reduce
+from json import dumps as to_json
 from typing import Annotated, List
 
 from fastapi import APIRouter, Body, Depends, Query, Response
@@ -7,11 +9,12 @@ import app.query.service as query_service
 from app.clients.big_query_client import BigQueryClient, get_big_query_client
 from app.clients.gen_ai_client import GenAIClient, get_gen_ai_client
 from app.llm.service import execute_query_generate
-
-from functools import reduce
+from app.logging import create_logger
 
 query_router = APIRouter(prefix="/query", tags=["Query"])
 data_router = APIRouter(prefix="/query/data", tags=["Data Query"])
+
+logger = create_logger(__name__)
 
 
 @query_router.post("/")
@@ -45,13 +48,25 @@ def query(
             execute_query_generate(action, gen_ai),
             bq_client,
         )
-        if type(result) == list and all(type(data) == dict for data in result):
-            dictionary_keys = [list(data.keys()) for data in result]
-            if all(len(keys) == 1 for keys in dictionary_keys):
-                single_key: str | None = reduce(lambda x, y: x if x == y else None, [keys[0] for keys in dictionary_keys])
-                if single_key:
-                    formatted_single_key = single_key.replace("_", " ").title()
-                    return f"{formatted_single_key} Values: {', '.join([data[single_key] for data in result])}"
+        if type(result) == list:
+            if len(result) == 1:
+                return result[0]
+            elif all(type(data) == dict for data in result):
+                dictionary_keys = [list(data.keys()) for data in result]
+                if all(len(keys) == 1 for keys in dictionary_keys):
+                    single_key: str | None = reduce(
+                        lambda x, y: x if x == y else None,
+                        [keys[0] for keys in dictionary_keys],
+                    )
+                    if single_key:
+                        logger.info(
+                            "All rows returned have a single column: %s", single_key
+                        )
+                        formatted_single_key = single_key.replace("_", " ").title()
+                        comma_sep_values = ", ".join(
+                            [data[single_key] for data in result]
+                        )
+                        return f"{formatted_single_key} Values: {comma_sep_values}"
         return result
     except BadRequest as e:
         return Response(
